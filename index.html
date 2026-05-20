@@ -11,17 +11,37 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
-        .card:hover { border-color: #3b82f6; transition: all 0.3s ease; }
+        .card:hover { border-color: #10b981; transition: all 0.3s ease; } /* Emerald 500 */
         .copy-toast { visibility: hidden; min-width: 200px; margin-left: -100px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; }
         .show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-        .active-tab { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: bold; }
+        .active-tab { border-bottom: 3px solid #059669; color: #059669; font-weight: bold; } /* Emerald 600 */
 
         /* 自定義捲軸 */
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background-color: transparent; }
+
+        /* 背景漂浮金融符號特效 */
+        .floating-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .float-icon {
+            position: absolute;
+            bottom: -150px;
+            color: #fbbf24; /* 耀眼金 Amber 400 */
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.12; }
+            90% { opacity: 0.12; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
 
         /* 吉祥物效果 */
         .mascot-container {
@@ -45,28 +65,43 @@
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
         @keyframes neon-glow {
-            from { filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff) drop-shadow(0 0 15px #0073ff) drop-shadow(0 0 20px #0073ff); }
-            to { filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #ff00de) drop-shadow(0 0 30px #ff00de) drop-shadow(0 0 40px #ff00de); }
+            from { filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff) drop-shadow(0 0 15px #10b981) drop-shadow(0 0 20px #10b981); }
+            to { filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #fbbf24) drop-shadow(0 0 30px #fbbf24) drop-shadow(0 0 40px #fbbf24); }
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-8 relative">
+
+    <!-- 背景漂浮金融符號 -->
+    <div class="floating-bg">
+        <i class="fa-solid fa-coins float-icon" style="left: 10%; font-size: 2.5rem; animation-duration: 18s; animation-delay: 0s;"></i>
+        <i class="fa-solid fa-money-bill-wave float-icon" style="left: 25%; font-size: 3.5rem; animation-duration: 22s; animation-delay: 3s; color: #34d399;"></i>
+        <i class="fa-solid fa-piggy-bank float-icon" style="left: 40%; font-size: 3rem; animation-duration: 19s; animation-delay: 7s;"></i>
+        <i class="fa-solid fa-sack-dollar float-icon" style="left: 60%; font-size: 4rem; animation-duration: 25s; animation-delay: 1s;"></i>
+        <i class="fa-solid fa-chart-line float-icon" style="left: 75%; font-size: 2.5rem; animation-duration: 16s; animation-delay: 5s; color: #10b981;"></i>
+        <i class="fa-solid fa-money-check-dollar float-icon" style="left: 90%; font-size: 3rem; animation-duration: 21s; animation-delay: 2s;"></i>
+        <i class="fa-solid fa-vault float-icon" style="left: 5%; font-size: 3.2rem; animation-duration: 24s; animation-delay: 9s;"></i>
+        <i class="fa-solid fa-credit-card float-icon" style="left: 50%; font-size: 2.8rem; animation-duration: 20s; animation-delay: 4s; color: #10b981;"></i>
+        <i class="fa-solid fa-wallet float-icon" style="left: 85%; font-size: 2.2rem; animation-duration: 17s; animation-delay: 8s;"></i>
+        <i class="fa-solid fa-gem float-icon" style="left: 30%; font-size: 2rem; animation-duration: 23s; animation-delay: 6s; color: #34d399;"></i>
+    </div>
 
     <!-- 吉祥物 -->
     <div class="mascot-container" title="Liyu Chill Guy">
         <img src="https://gongminshenliyuchiutiger.github.io/__public-useful__/image/LiyuChill.svg" alt="LiyuChillGuy">
     </div>
 
-    <div class="max-w-5xl mx-auto">
+    <!-- 將主內容加上 relative 與 z-10 確保不被漂浮背景蓋住 -->
+    <div class="max-w-5xl mx-auto relative z-10">
         <!-- Header -->
         <div class="text-center mb-12 mt-8">
             <h1 class="font-extrabold tracking-tight leading-none mb-4">
                 <span class="block text-2xl md:text-3xl text-gray-500 mb-2 font-medium">金融基礎教育課程設計與教材製作</span>
-                <span class="block text-4xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500">
+                <span class="block text-4xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-500">
                     AI提示詞庫整合系統
                 </span>
             </h1>
-            <div class="h-1 w-24 bg-blue-600 mx-auto rounded-full opacity-50"></div>
+            <div class="h-1 w-24 bg-emerald-600 mx-auto rounded-full opacity-50"></div>
         </div>
 
         <!-- PARTS 架構概念區 -->
@@ -81,13 +116,13 @@
                     <div class="font-bold text-gray-800 text-sm mb-1">Persona</div>
                     <div class="text-xs text-gray-500">設定專家角色</div>
                 </div>
-                <div class="p-4 bg-blue-50/50 border border-blue-100 rounded-lg group hover:bg-blue-50 transition-colors">
-                    <div class="text-2xl font-black text-blue-500 mb-1 group-hover:scale-110 transition-transform">A</div>
+                <div class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-lg group hover:bg-emerald-50 transition-colors">
+                    <div class="text-2xl font-black text-emerald-500 mb-1 group-hover:scale-110 transition-transform">A</div>
                     <div class="font-bold text-gray-800 text-sm mb-1">Action</div>
                     <div class="text-xs text-gray-500">給予明確任務</div>
                 </div>
-                <div class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-lg group hover:bg-emerald-50 transition-colors">
-                    <div class="text-2xl font-black text-emerald-500 mb-1 group-hover:scale-110 transition-transform">R</div>
+                <div class="p-4 bg-teal-50/50 border border-teal-100 rounded-lg group hover:bg-teal-50 transition-colors">
+                    <div class="text-2xl font-black text-teal-500 mb-1 group-hover:scale-110 transition-transform">R</div>
                     <div class="font-bold text-gray-800 text-sm mb-1">Result</div>
                     <div class="text-xs text-gray-500">限定產出格式</div>
                 </div>
@@ -107,78 +142,78 @@
         <!-- Workflow Tabs -->
         <div class="flex flex-wrap justify-center gap-4 md:gap-12 mb-8 border-b border-gray-200 px-2 pb-2">
             <button onclick="switchTab('stage1')" id="tab-stage1" class="pb-3 text-base md:text-lg active-tab whitespace-nowrap"><i class="fa-solid fa-book-open mr-2"></i>1. 教材解構</button>
-            <button onclick="switchTab('stage2')" id="tab-stage2" class="pb-3 text-base md:text-lg text-gray-500 hover:text-blue-600 whitespace-nowrap"><i class="fa-solid fa-lightbulb mr-2"></i>2. 創意融入</button>
-            <button onclick="switchTab('stage3')" id="tab-stage3" class="pb-3 text-base md:text-lg text-gray-500 hover:text-blue-600 whitespace-nowrap"><i class="fa-solid fa-layer-group mr-2"></i>3. 活動素材</button>
-            <button onclick="switchTab('stage4')" id="tab-stage4" class="pb-3 text-base md:text-lg text-gray-500 hover:text-blue-600 whitespace-nowrap"><i class="fa-solid fa-clipboard-check mr-2"></i>4. 試教與評量</button>
+            <button onclick="switchTab('stage2')" id="tab-stage2" class="pb-3 text-base md:text-lg text-gray-500 hover:text-emerald-600 whitespace-nowrap"><i class="fa-solid fa-lightbulb mr-2"></i>2. 創意融入</button>
+            <button onclick="switchTab('stage3')" id="tab-stage3" class="pb-3 text-base md:text-lg text-gray-500 hover:text-emerald-600 whitespace-nowrap"><i class="fa-solid fa-layer-group mr-2"></i>3. 活動素材</button>
+            <button onclick="switchTab('stage4')" id="tab-stage4" class="pb-3 text-base md:text-lg text-gray-500 hover:text-emerald-600 whitespace-nowrap"><i class="fa-solid fa-clipboard-check mr-2"></i>4. 試教與評量</button>
         </div>
 
         <!-- 控制面板區 (Control Panel) -->
-        <div class="mb-8 bg-blue-50 border border-blue-100 rounded-xl shadow-sm relative overflow-hidden transition-all duration-300">
+        <div class="mb-8 bg-emerald-50 border border-emerald-100 rounded-xl shadow-sm relative overflow-hidden transition-all duration-300">
             <!-- 裝飾圓圈 -->
-            <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-100 rounded-full opacity-50 pointer-events-none"></div>
+            <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-100 rounded-full opacity-50 pointer-events-none"></div>
             
             <!-- 標題按鈕區 (可點擊收合) -->
-            <button onclick="togglePanel()" class="w-full flex items-center justify-between p-5 bg-blue-50 hover:bg-blue-100 transition-colors focus:outline-none relative z-10">
+            <button onclick="togglePanel()" class="w-full flex items-center justify-between p-5 bg-emerald-50 hover:bg-emerald-100 transition-colors focus:outline-none relative z-10">
                 <div class="flex items-center">
-                    <h3 class="text-lg font-bold text-blue-800"><i class="fa-solid fa-sliders mr-2"></i>提示詞控制面板</h3>
-                    <span class="ml-3 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full"><i class="fa-solid fa-bolt mr-1"></i>進階功能</span>
+                    <h3 class="text-lg font-bold text-emerald-800"><i class="fa-solid fa-sliders mr-2"></i>提示詞控制面板</h3>
+                    <span class="ml-3 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded-full"><i class="fa-solid fa-bolt mr-1"></i>進階功能</span>
                 </div>
-                <div class="flex items-center text-blue-600 text-sm font-medium">
+                <div class="flex items-center text-emerald-600 text-sm font-medium">
                     <span id="panel-text" class="mr-2">點擊收合</span>
                     <i id="panel-icon" class="fa-solid fa-chevron-up transition-transform duration-300"></i>
                 </div>
             </button>
             
             <div id="control-panel-content" class="px-6 max-h-[800px] opacity-100 overflow-hidden transition-all duration-500 ease-in-out relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6 pt-5 border-t border-blue-200/50">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6 pt-5 border-t border-emerald-200/50">
                     <!-- 左側：情境替換區 (佔 7 欄) -->
-                    <div class="lg:col-span-7 bg-white p-5 rounded-xl border border-blue-100 shadow-sm transition-shadow hover:shadow-md">
+                    <div class="lg:col-span-7 bg-white p-5 rounded-xl border border-emerald-100 shadow-sm transition-shadow hover:shadow-md">
                         <div class="mb-4 border-b border-gray-100 pb-2">
-                            <h4 class="text-sm font-bold text-blue-800"><i class="fa-solid fa-wand-magic-sparkles mr-2 text-amber-500"></i>一鍵變數替換區</h4>
+                            <h4 class="text-sm font-bold text-emerald-800"><i class="fa-solid fa-wand-magic-sparkles mr-2 text-amber-500"></i>一鍵變數替換區</h4>
                         </div>
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1.5"><i class="fa-solid fa-bullseye mr-1 text-gray-400"></i>對應 [請輸入單元名稱]</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fa-solid fa-tag text-blue-400"></i>
+                                        <i class="fa-solid fa-tag text-emerald-400"></i>
                                     </div>
-                                    <input type="text" id="topic-input" oninput="renderPrompts(currentTab)" placeholder="輸入主題 (如: 複利效應、風險管理)..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all focus:bg-white bg-gray-50">
+                                    <input type="text" id="topic-input" oninput="renderPrompts(currentTab)" placeholder="輸入主題 (如: 複利效應、風險管理)..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all focus:bg-white bg-gray-50">
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1.5"><i class="fa-regular fa-file-lines mr-1 text-gray-400"></i>對應 [請貼上文本與題目]</label>
                                 <div class="relative">
                                     <div class="absolute top-2.5 left-3 pointer-events-none">
-                                        <i class="fa-solid fa-quote-left text-blue-400"></i>
+                                        <i class="fa-solid fa-quote-left text-emerald-400"></i>
                                     </div>
-                                    <textarea id="material-input" oninput="renderPrompts(currentTab)" placeholder="貼上金管會教材段落或測驗題目..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm h-16 resize-none transition-all focus:bg-white bg-gray-50 custom-scrollbar"></textarea>
+                                    <textarea id="material-input" oninput="renderPrompts(currentTab)" placeholder="貼上金管會教材段落或測驗題目..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm h-16 resize-none transition-all focus:bg-white bg-gray-50 custom-scrollbar"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 右側：資料篩選區 (佔 5 欄) -->
-                    <div class="lg:col-span-5 bg-white p-5 rounded-xl border border-blue-100 shadow-sm flex flex-col transition-shadow hover:shadow-md">
+                    <div class="lg:col-span-5 bg-white p-5 rounded-xl border border-emerald-100 shadow-sm flex flex-col transition-shadow hover:shadow-md">
                         <div class="mb-4 border-b border-gray-100 pb-2">
-                            <h4 class="text-sm font-bold text-blue-800"><i class="fa-solid fa-filter mr-2 text-indigo-500"></i>卡片篩選器</h4>
+                            <h4 class="text-sm font-bold text-emerald-800"><i class="fa-solid fa-filter mr-2 text-teal-500"></i>卡片篩選器</h4>
                         </div>
                         <div class="space-y-4 flex-grow flex flex-col">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1.5"><i class="fa-solid fa-magnifying-glass mr-1 text-gray-400"></i>透過關鍵字尋找</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fa-solid fa-search text-blue-400"></i>
+                                        <i class="fa-solid fa-search text-emerald-400"></i>
                                     </div>
-                                    <input type="text" id="search-input" oninput="renderPrompts(currentTab)" placeholder="搜尋標題或內容..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all focus:bg-white bg-gray-50">
+                                    <input type="text" id="search-input" oninput="renderPrompts(currentTab)" placeholder="搜尋標題或內容..." class="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all focus:bg-white bg-gray-50">
                                 </div>
                             </div>
                             <div class="mt-auto pt-2">
                                 <label class="block text-xs font-semibold text-gray-500 mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1 text-gray-400"></i>指定專屬 AI 工具</label>
                                 <div class="flex gap-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
-                                    <button onclick="setToolFilter('All')" id="filter-All" class="filter-btn flex-1 py-1.5 rounded-md bg-blue-600 text-white font-medium text-xs transition-colors shadow-sm">全部顯示</button>
-                                    <button onclick="setToolFilter('Gemini')" id="filter-Gemini" class="filter-btn flex-1 py-1.5 rounded-md bg-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-200 font-medium text-xs transition-colors">Gemini</button>
-                                    <button onclick="setToolFilter('NotebookLM')" id="filter-NotebookLM" class="filter-btn flex-1 py-1.5 rounded-md bg-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-200 font-medium text-xs transition-colors">NotebookLM</button>
+                                    <button onclick="setToolFilter('All')" id="filter-All" class="filter-btn flex-1 py-1.5 rounded-md bg-emerald-600 text-white font-medium text-xs transition-colors shadow-sm">全部顯示</button>
+                                    <button onclick="setToolFilter('Gemini')" id="filter-Gemini" class="filter-btn flex-1 py-1.5 rounded-md bg-transparent text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 font-medium text-xs transition-colors">Gemini</button>
+                                    <button onclick="setToolFilter('NotebookLM')" id="filter-NotebookLM" class="filter-btn flex-1 py-1.5 rounded-md bg-transparent text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 font-medium text-xs transition-colors">NotebookLM</button>
                                 </div>
                             </div>
                         </div>
@@ -188,11 +223,11 @@
         </div>
 
         <!-- Stage Description -->
-        <div class="mb-6 border-l-4 border-blue-600 pl-4 py-1 bg-gradient-to-r from-blue-50/80 to-transparent rounded-r-lg">
-            <h2 id="stage-title" class="text-xl font-bold text-gray-800"><i class="fa-solid fa-book-open mr-2 text-blue-500"></i>階段一：官方教材解構與基礎熟悉</h2>
+        <div class="mb-6 border-l-4 border-emerald-600 pl-4 py-1 bg-gradient-to-r from-emerald-50/80 to-transparent rounded-r-lg">
+            <h2 id="stage-title" class="text-xl font-bold text-gray-800"><i class="fa-solid fa-book-open mr-2 text-emerald-500"></i>階段一：官方教材解構與基礎熟悉</h2>
             <p id="stage-desc" class="text-gray-600 text-sm mt-1">
                 扎實基本功：上傳或輸入金管會等官方教材內容，讓 AI 幫你萃取核心概念，預測學生盲點，並補充最新時事。<br>
-                <a href="https://rm.ib.gov.tw/pages/FKLearning_new.aspx" target="_blank" class="inline-block mt-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"><i class="fa-solid fa-up-right-from-square mr-1"></i> 點此前往：金管會保險局風險管理與保險教育推廣入口網下載教材</a>
+                <a href="https://rm.ib.gov.tw/pages/FKLearning_new.aspx" target="_blank" class="inline-block mt-2 text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded hover:bg-emerald-200 transition-colors"><i class="fa-solid fa-up-right-from-square mr-1"></i> 點此前往：金管會保險局風險管理與保險教育推廣入口網下載教材</a>
             </p>
         </div>
 
@@ -205,8 +240,8 @@
         <div class="mt-20 text-center text-gray-400 text-sm border-t pt-8 pb-4">
             <div class="mb-3">
                 <a href="https://www.facebook.com/happyliyuchilltiger" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center group">
-                    <i class="fa-brands fa-facebook text-2xl text-blue-600 mr-2 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-medium text-base text-gray-600 group-hover:text-blue-600 transition-colors">快樂鯉魚秋老虎</span>
+                    <i class="fa-brands fa-facebook text-2xl text-emerald-600 mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium text-base text-gray-600 group-hover:text-emerald-600 transition-colors">快樂鯉魚秋老虎</span>
                 </a>
             </div>
             <p>Copyright © Liyuchiutiger FinancialEd</p>
@@ -218,26 +253,26 @@
 
     <script>
         const stageInfo = {
-            stage1: { title: '<i class="fa-solid fa-book-open mr-2 text-blue-500"></i>階段一：官方教材解構與基礎熟悉', desc: '扎實基本功：上傳或輸入金管會等官方教材內容，讓 AI 幫你萃取核心概念，預測學生盲點，並補充最新時事。<br><a href="https://rm.ib.gov.tw/pages/FKLearning_new.aspx" target="_blank" class="inline-block mt-2 text-xs bg-blue-100 text-blue-700 px-2 py-1. rounded hover:bg-blue-200 transition-colors"><i class="fa-solid fa-up-right-from-square mr-1"></i> 點此前往：金管會保險局風險管理與保險教育推廣入口網下載教材</a>' },
-            stage2: { title: '<i class="fa-solid fa-lightbulb mr-2 text-yellow-500"></i>階段二：引起動機與創意融入', desc: '加點調味料：在官方教材的基礎上，設計有趣的開場破冰、將生硬法規或金融常識轉化為故事，或融入學生次文化。' },
-            stage3: { title: '<i class="fa-solid fa-layer-group mr-2 text-pink-500"></i>階段三：互動素材與學習單設計', desc: '產出教具：將教材轉化為實作活動、具備思考層次的挖空學習單，以及具視覺衝擊力的簡報大綱。' },
-            stage4: { title: '<i class="fa-solid fa-clipboard-check mr-2 text-purple-500"></i>階段四：課堂評量與試教防禦', desc: '備戰上台：產出快問快答、跨科融入素養題，並請 AI 扮演嚴格委員針對你的教學內容進行犀利講評。' }
+            stage1: { title: '<i class="fa-solid fa-book-open mr-2 text-emerald-600"></i>階段一：官方教材解構與基礎熟悉', desc: '扎實基本功：上傳或輸入金管會等官方教材內容，讓 AI 幫你萃取核心概念，預測學生盲點，並補充最新時事。<br><a href="https://rm.ib.gov.tw/pages/FKLearning_new.aspx" target="_blank" class="inline-block mt-2 text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded hover:bg-emerald-200 transition-colors"><i class="fa-solid fa-up-right-from-square mr-1"></i> 點此前往：金管會保險局風險管理與保險教育推廣入口網下載教材</a>' },
+            stage2: { title: '<i class="fa-solid fa-lightbulb mr-2 text-amber-500"></i>階段二：引起動機與創意融入', desc: '加點調味料：在官方教材的基礎上，設計有趣的開場破冰、將生硬法規或金融常識轉化為故事，或無縫融入既有學科中。' },
+            stage3: { title: '<i class="fa-solid fa-layer-group mr-2 text-teal-500"></i>階段三：互動素材與學習單設計', desc: '產出教具：將教材轉化為實作活動、具備思考層次的挖空學習單，以及具視覺衝擊力的簡報大綱。' },
+            stage4: { title: '<i class="fa-solid fa-clipboard-check mr-2 text-indigo-500"></i>階段四：課堂評量與試教防禦', desc: '備戰上台：產出快問快答、跨科融入素養題，並請 AI 扮演嚴格委員針對你的教學內容進行犀利講評。' }
         };
 
         const data = {
             stage1: [
                 { id: 'S1-1', title: '概念地圖萃取', tool: 'NotebookLM', tag: '理解教材', content: '我上傳了從金管會（或相關官方平台）下載的這份單元教材 PDF，請你扮演一位資深的課程設計專家。\n\n【任務】：請幫我從這份教材中萃取出這個單元的核心「概念地圖」與「知識點階層」，包含主要的知識節點與其關聯性。\n\n【輸出格式】：請以清晰的樹狀層級或條列式大綱呈現，讓我可以快速掌握備課重點與整體脈絡。' },
-                { id: 'S1-2', title: '難點與迷思預測', tool: 'Gemini', tag: '學情準備', content: '你現在是一位擁有 20 年教學經驗的資深中學金融教育老師。請閱讀以下官方教材段落：[請貼上教材段落]。\n\n【任務】：請針對 [國中/高中] 學生的認知發展程度，預測他們在閱讀這段文本時，最容易卡關的 3 個「專有名詞」與 2 個常見「迷思概念」。\n\n【輸出格式】：請用「表格」呈現，欄位包含：「專有名詞 / 迷思概念」、「學生可能產生的誤解」、「白話文舉例與解釋（需結合學生日常生活體驗）」。' },
+                { id: 'S1-2', title: '難點與迷思預測', tool: 'Gemini', tag: '學情準備', content: '你現在是一位擁有 20 年教學經驗、擅長將「金融理財知識」自然融入日常學科教學（如公民、家政或彈性課程）的資深中學老師。請閱讀以下官方教材段落：[請貼上教材段落]。\n\n【任務】：請針對 [國中/高中] 學生的認知發展程度，預測他們在閱讀這段文本時，最容易卡關的 3 個「專有名詞」與 2 個常見「迷思概念」。\n\n【輸出格式】：請用「表格」呈現，欄位包含：「專有名詞 / 迷思概念」、「學生可能產生的誤解」、「白話文舉例與解釋（需結合學生日常生活體驗）」。' },
                 { id: 'S1-3', title: '新舊教材差異比對', tool: 'NotebookLM', tag: '版本更新', content: '我上傳了同一個教學單元的「舊版官方教材」與「新版官方教材」資料。請你以教育領域的版本分析師角度進行比對。\n\n【任務】：幫我細緻比對這兩份文件並列出主要差異。\n\n【輸出格式】：請分點明確列出 1. 刪除了哪些過時觀念或法規？ 2. 新增了哪些必教的重點與名詞？ 3. 建議我在備課時，該如何針對這些更動轉換講述重點與心態？' },
-                { id: 'S1-4', title: '先備知識連結', tool: 'Gemini', tag: '教學銜接', content: '你是一位熟悉十二年國教課綱與跨領域金融基礎教育融入教學的老師。我要教高中階段的 [請輸入單元：例如保險與風險管理]。\n\n【任務】：請告訴我，學生在「國小」與「國中」階段的社會或家政等科目中，分別已經學過哪些相關的金融理財先備知識？\n\n【輸出格式】：請列出具體的「已學過的概念名稱」，並提供 2 個我可以如何從那些國中小經驗「破題開場」的具體提問（作為新課程承先啟後的橋樑）。' },
+                { id: 'S1-4', title: '先備知識連結', tool: 'Gemini', tag: '教學銜接', content: '你是一位熟悉十二年國教課綱與跨領域金融基礎教育融入教學的老師。我要在高中階段安排一段 [請輸入單元：例如保險與風險管理] 的課程模組。\n\n【任務】：請告訴我，學生在「國小」與「國中」階段的社會或家政等科目中，分別已經學過哪些相關的金融理財先備知識？\n\n【輸出格式】：請列出具體的「已學過的概念名稱」，並提供 2 個我可以如何從那些國中小經驗「破題開場」的具體提問（作為新課程承先啟後的橋樑）。' },
                 { id: 'S1-5', title: '文本難度降維打擊', tool: 'Gemini', tag: '差異化', content: '你是一位擅長「差異化教學」與「譬喻法」的教育專家。官方教材裡的這段描述：[請貼上艱澀的教材段落或法條]，對班上後段班或學習動機較弱的學生來說太抽象了。\n\n【任務】：請幫我將這段文字進行降階與轉譯。\n\n【輸出要求】：請提供兩種翻譯版本：A. 國小高年級也能聽懂的「極度白話文版」。B. 結合「速食店或超商結帳、手遊課金等中學生熟悉的生活經驗」做比喻的「生活情境版」。' },
-                { id: 'S1-6', title: '找尋補充時事', tool: 'Gemini', tag: '更新案例', content: '你是一位時事敏銳度極高的金融教育推廣者。這單元官方教材舉的案例可能有點舊了。\n\n【任務】：請根據教材的 [請輸入知識點，如：通貨膨脹對購買力的影響]，幫我搜尋 3 個「近一年內」發生在台灣的新聞時事，適合作為國高中生上課的補充案例。\n\n【輸出格式】：請以列表呈現，每則新聞需包含：「新聞標題與大約發生時間」、「簡短的事件爭點摘要」、「這個新聞如何精準對應到課堂知識點」。' }
+                { id: 'S1-6', title: '找尋補充時事', tool: 'Gemini', tag: '更新案例', content: '你是一位時事敏銳度極高、致力於金融教育推廣的老師。這單元官方教材舉的案例可能有點舊了。\n\n【任務】：請根據教材的 [請輸入知識點，如：通貨膨脹對購買力的影響]，幫我搜尋 3 個「近一年內」發生在台灣的新聞時事，適合作為國高中生上課的補充案例。\n\n【輸出格式】：請以列表呈現，每則新聞需包含：「新聞標題與大約發生時間」、「簡短的事件爭點摘要」、「這個新聞如何精準對應到課堂知識點」。' }
             ],
             stage2: [
-                { id: 'S2-1', title: '引起動機 (Hook) 設計', tool: 'Gemini', tag: '破冰設計', content: '你是一位擅長創意教學設計的教育專家。我要準備 [請輸入單元名稱] 的第一堂課，目前的教材內容有些枯燥。\n\n【任務】：請幫我設計一個 5 分鐘的課前「引起動機 (Hook)」活動或情境提問。必須與目前國高中生的校園生活、社群媒體或流行次文化深度結合，能引發兩難思考或熱烈討論。\n\n【輸出要求】：請提供：1. 活動名稱 2. 老師的開場破冰話術片段 3. 具體操作步驟 4. 遊戲結束後如何順暢地將討論收斂回課堂重點。' },
+                { id: 'S2-1', title: '引起動機 (Hook) 設計', tool: 'Gemini', tag: '破冰設計', content: '你是一位擅長創意教學設計的教育專家。我準備在我的學科中融入 [請輸入單元名稱] 議題，目前的官方教材內容有些枯燥。\n\n【任務】：請幫我設計一個 5 分鐘的課前「引起動機 (Hook)」活動或情境提問。必須與目前國高中生的校園生活、社群媒體或流行次文化深度結合，能引發兩難思考或熱烈討論。\n\n【輸出要求】：請提供：1. 活動名稱 2. 老師的開場破冰話術片段 3. 具體操作步驟 4. 遊戲結束後如何順暢地將討論收斂回該金融重點。' },
                 { id: 'S2-2', title: '枯燥文本故事化', tool: 'Gemini', tag: '情境塑造', content: '你是一位專職於「教育桌遊」與「情境故事」設計的編劇。官方教材中關於 [請輸入主題，如：信用卡循環利息或個人破產] 的描述十分生硬。\n\n【任務】：請依照教材的知識結構，將它改寫成一個充滿懸疑、推理解謎或角色扮演風格的「校園日常微小說」。\n\n【輸出要求】：故事長度約 500 字，主角必須是一名平常的中學生，讓全班學生在跟著主角經歷並解決問題的過程中，自然而然學會並帶出該主題的核心概念。' },
                 { id: 'S2-3', title: '融入次文化梗', tool: 'Gemini', tag: '增進共鳴', content: '你是一位非常了解青少年文化與網路迷因（Meme）的幽默老師。\n\n【任務】：請將教材中的 [請輸入概念，例如：機會成本與選擇]，結合目前中學生流行的次文化、熱門電玩遊戲、知名動漫（如：咒術迴戰、葬送的芙莉蓮等）或常見網路語錄。\n\n【輸出要求】：設計一個能讓全班秒懂且會心一笑的舉例方式，並附上老師在上課時配合這個舉例可以搭配使用的「幽默台詞」或「互動橋段」。' },
-                { id: 'S2-4', title: '兩難情境 (Dilemma) 設計', tool: 'Gemini', tag: '議題思辨', content: '你是一位專精於「價值觀澄清法」與「議題推演」的金融教育老師。針對教材裡 [請輸入主題，如：消費信貸與過度負債] 的概念。\n\n【任務】：請幫我設計一個「沒有絕對對錯、充滿道德掙扎」的兩難情境 (Dilemma)。情境必須發生在學生容易想像的校園或班級通訊軟體內。\n\n【輸出要求】：1. 描述該情境的背景故事 2. 列出「選項 A」與「選項 B」各自帶來的好處與代價 3. 提供三個可以用來引導全班進行「選邊站」討論的省思提問。' },
+                { id: 'S2-4', title: '兩難情境 (Dilemma) 設計', tool: 'Gemini', tag: '議題思辨', content: '你是一位專精於「價值觀澄清法」與「議題推演」，並熱衷於在課堂中融入金融理財議題的中學老師。針對教材裡 [請輸入主題，如：消費信貸與過度負債] 的概念。\n\n【任務】：請幫我設計一個「沒有絕對對錯、充滿道德掙扎」的兩難情境 (Dilemma)。情境必須發生在學生容易想像的校園或班級通訊軟體內。\n\n【輸出要求】：1. 描述該情境的背景故事 2. 列出「選項 A」與「選項 B」各自帶來的好處與代價 3. 提供三個可以用來引導全班進行「選邊站」討論的省思提問。' },
                 { id: 'S2-5', title: '角色扮演陣營卡', tool: 'Gemini (Canvas)', tag: '公聽會', content: '你是一位實境角色扮演（LARP）的活動設計師。我們要在課堂上針對 [請輸入議題，如：高中生是否適合投資虛擬貨幣 / 零用錢是否該與家事綁定] 舉辦一場 15 分鐘的模擬公聽會。\n\n【任務】：請為我生成 4 張不同立場的「角色設定卡」（例如：理財專家、老師、家長、學生）。\n\n【輸出格式】：請使用表格為每張卡片提供：1. 角色名稱與簡介 2. 該角色表面上堅持的核心論點 3. 該角色心中不想說出來的隱憂 4. 一個在談判時絕不退讓的「秘密底線」。' },
                 { id: 'S2-6', title: 'ORID 焦點討論導引', tool: 'Gemini', tag: '提問設計', content: '你是一位精通 ORID（焦點討論法）的引導師。我等一下要放一段關於 [請輸入主題，如：常見的投資詐騙手法] 的短影片給學生看。\n\n【任務】：請利用 ORID 的四個層次，幫我設計一套流暢的提問腳本，讓我可以在影片播完後，帶領學生進行 5~8 分鐘的反思討論。\n\n【輸出要求】：請明確列出 1. O 客觀描述層次 (Objective)  2. R 情緒反應層次 (Reflective)  3. I 意義詮釋層次 (Interpretive)  4. D 決策行動層次 (Decisional) 各 1~2 個適合國高中生程度的問題，切忌過於學術或抽象。' }
             ],
@@ -251,11 +286,11 @@
             ],
             stage4: [
                 { id: 'S4-1', title: '概念快問快答命題', tool: 'Gemini', tag: '形成性評量', content: '你是一位很會設計誘答選項的測驗與評量專家。\n\n【任務】：根據我後續貼上的教學重點，幫我生成 5 題可以用在 Kahoot! 或是課堂舉手搶答的「多選快問快答題」。\n\n【輸出要求】：這 5 題必須直接對準學生最容易混淆的觀念。每個題要有 4 個選項。最重要的是，《誘答選項必須設計得分化度極高》，要能抓準似是而非的錯誤觀念，絕不可出現能輕易刪除的荒謬選項。請在最後附上正確答案與一行解析。' },
-                { id: 'S4-2', title: '跨科融入素養題組', tool: 'NotebookLM', tag: '總結性評量', content: '你是一位熟悉各類大考命題、擅長跨領域素養導向題型的資深典試委員。\n\n【任務】：結合「我上傳的教材重點」以及「包含最新時事的補充素材」，為我設計一組符合跨科融入趨勢的「情境混合題組」。\n\n【輸出要求】：1. 請先撰寫一段蘊含線索的情境導讀短文 2. 包含 2 題測驗高層次推論的單選題 3. 包含 1 題需引導學生從文本擷取資訊來作答的「手寫簡答題」 4. 針對簡答題，必須提供老師批改用的「給分規準 (Rubric)」(需明確列出完全給分、部分給分、不給分的條件)。' },
+                { id: 'S4-2', title: '跨科融入素養題組', tool: 'NotebookLM', tag: '總結性評量', content: '你是一位熟悉各類大考命題、擅長跨領域素養導向題型的資深典試委員。\n\n【任務】：結合「我上傳的教材重點」以及「包含最新時事的補充素材」，為我設計一組符合跨科研習趨勢的「情境混合題組」。\n\n【輸出要求】：1. 請先撰寫一段蘊含線索的情境導讀短文 2. 包含 2 題測驗高層次推論的單選題 3. 包含 1 題需引導學生從文本擷取資訊來作答的「手寫簡答題」 4. 針對簡答題，必須提供老師批改用的「給分規準 (Rubric)」(需明確列出完全給分、部分給分、不給分的條件)。' },
                 { id: 'S4-3', title: '實作活動評量尺規', tool: 'Gemini', tag: 'Rubric', content: '你是一位專攻多元評量與表現任務 (Performance Task) 的教育工作者。學生即將進行有關 [請輸入活動名稱：如 班級理財或創業提案] 的小組跑堂發表。\n\n【任務】：為了減輕老師主觀評分壓力並讓學生明確知道標準，請設計一份完整的評量尺規表 (Analytic Rubric)。\n\n【輸出要求】：請以「表格」呈現。直列向度至少涵蓋：「分析深度、方案可行性、視覺呈現、團隊分工」四大項。橫列分為 1 分(待加強) 到 4 分(優異)。每個格子內必須填入具體觀察得到的《行為描述》，讓評分者能一目了然地勾選。' },
                 { id: 'S4-4', title: '測驗陷阱題偵測', tool: 'Gemini', tag: '試題除錯', content: '你現在扮演一位「邏輯極佳、熱愛找出老師題目漏洞」的頂尖學霸，同時具備「命題輔導團」的專業除錯能力。\n\n【任務】：這是我剛出的一題選擇題：[請貼上題目敘述與 4 個選項]。請幫我進行「壓力測試與全面除錯」。\n\n【輸出要求】：請嚴厲揪出瑕疵。包含：1. 題幹是否有邏輯漏洞或語意不清？ 2. 選項是否有超過學生程度的超綱名詞？ 3. 是否可能導致學生申訴「全送分」（如多個選項皆可通或無標準答案）？ 4. 在指出所有問題後，請幫我重寫一個無懈可擊的完美版本。' },
                 { id: 'S4-5', title: '反思退出卡 (Exit Ticket)', tool: 'Gemini', tag: '收斂總結', content: '你是一位精通形成性評量、能快速掌握全班學習成效的教學大師。我剛教完了 [請輸入單元焦點：如 複利效應] 這個重點單元。\n\n【任務】：請幫我設計 3 款不同思維層次的「退出卡 (Exit Ticket)」活動選項，讓我可以在下課前 5 分鐘讓學生寫在便條紙交回，確保他們真的有聽懂而不是死背。\n\n【輸出要求】：請提供 1. 「快速摘要題」（用一句話總結精華） 2. 「概念應用題」（套用到個人的日常經驗） 3. 「類比隱喻題」（今天內容就像是某種東西，為什麼？）。問題請保持簡短犀利。' },
-                { id: 'S4-6', title: '教學(Demo)防禦演練', tool: 'Gemini', tag: '試教準備', content: '你現在扮演一位「教學經驗超過 30 年、嚴肅且注重學生高層次思考」的金融教育專家與口試委員。\n\n【任務】：我準備要在研習或公開觀課時，對著您試教 [請輸入單元名稱] 15 分鐘。為了事前防禦，請提早「對我猛烈開火」。\n\n【輸出要求】：請針對該主題提出 3 個極度犀利的講評與口試挑戰問題。方向涵蓋：1. 老師最容易犯的「念稿式無聊教學」的盲點 2. 該主題最致命的「錯誤金融觀念解釋」 3. 應對台下學生失去耐心的「班級經營策略」挑戰。請直接給出您的尖銳提問！' }
+                { id: 'S4-6', title: '教學(Demo)防禦演練', tool: 'Gemini', tag: '試教準備', content: '你現在扮演一位「教學經驗超過 30 年、嚴肅且注重學生高層次思考」的大學教授，同時也是推動金融教育跨領域融入的輔導委員。\n\n【任務】：我準備要在研習或公開觀課時，對著您試教一段融入金融理財概念的 [請輸入單元名稱] 15 分鐘。為了事前防禦，請提早「對我猛烈開火」。\n\n【輸出要求】：請針對該主題提出 3 個極度犀利的講評與口試挑戰問題。方向涵蓋：1. 老師最容易犯的「為了教金融而生硬融入」的教學盲點 2. 該主題最致命的「錯誤金融觀念解釋」 3. 應對台下學生失去耐心的「班級經營策略」挑戰。請直接給出您的尖銳提問！' }
             ]
         };
 
@@ -283,12 +318,12 @@
         function setToolFilter(tool) {
             currentFilter = tool;
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white', 'border-transparent');
-                btn.classList.add('bg-white', 'text-blue-600', 'border-blue-200');
+                btn.classList.remove('bg-emerald-600', 'text-white', 'border-transparent');
+                btn.classList.add('bg-transparent', 'text-gray-500');
             });
             const activeBtn = document.getElementById(`filter-${tool}`);
-            activeBtn.classList.remove('bg-white', 'text-blue-600', 'border-blue-200');
-            activeBtn.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+            activeBtn.classList.remove('bg-transparent', 'text-gray-500');
+            activeBtn.classList.add('bg-emerald-600', 'text-white', 'border-transparent');
             renderPrompts(currentTab);
         }
 
@@ -353,12 +388,12 @@
                             <span class="text-xs font-bold text-gray-500 mr-2 border border-gray-300 rounded px-1.5 py-0.5 whitespace-nowrap mb-1 flex items-center h-fit"><i class="fa-solid fa-robot mr-1"></i>${item.tool}</span>
                             <span class="text-lg font-bold text-gray-800 mb-1 leading-tight">${item.title}</span>
                         </div>
-                        <span class="text-xs font-bold px-2 py-1 rounded bg-blue-50 text-blue-600 group-hover:bg-blue-100 whitespace-nowrap ml-2">${item.tag}</span>
+                        <span class="text-xs font-bold px-2 py-1 rounded bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 whitespace-nowrap ml-2">${item.tag}</span>
                     </div>
                     <div class="flex-grow">
                         <p class="text-gray-600 text-sm leading-relaxed mb-4 max-h-40 overflow-y-auto pr-2 custom-scrollbar">${formattedContent}</p>
                     </div>
-                    <div class="text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-end mt-auto pt-2 border-t border-gray-100">
+                    <div class="text-xs text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-end mt-auto pt-2 border-t border-gray-100">
                         <i class="fa-regular fa-copy mr-1"></i> 全文可捲動閱讀，點擊完整複製指令
                     </div>
                 `;
@@ -383,12 +418,12 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
-                // 撒花特效
+                // 撒花特效：改成符合財富的色調（翡翠綠、耀眼金）
                 confetti({
                     particleCount: 150,
                     spread: 80,
                     origin: { y: 0.6 },
-                    colors: ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'],
+                    colors: ['#059669', '#10b981', '#34d399', '#fbbf24', '#f59e0b'],
                     zIndex: 2000
                 });
 
